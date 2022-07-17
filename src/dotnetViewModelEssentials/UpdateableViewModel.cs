@@ -1,4 +1,6 @@
-﻿using dotnetStandardEssentials;
+﻿//using CommunityToolkit.Mvvm.ComponentModel;
+//using CommunityToolkit.Mvvm.Input;
+using dotnetStandardEssentials;
 using MvvmCross.Commands;
 using MvvmCross.ViewModels;
 using System;
@@ -41,6 +43,7 @@ namespace dotnetViewModelEssentials
                     if (property.PropertyType == typeof(IMvxCommand) && property.GetValue(this) != null)
                     {
                         MethodInfo m = property.PropertyType.GetMethod("RaiseCanExecuteChanged");
+                        //MethodInfo m = property.PropertyType.GetMethod("NotifyCanExecuteChanged");
                         m.Invoke(property.GetValue(this), null);
                     }
                 }

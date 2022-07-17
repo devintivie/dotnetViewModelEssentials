@@ -27,6 +27,6 @@ namespace dotnetViewModelEssentials
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        Task LoadConfigurationAsync(string filename);
+        Task<bool> LoadConfigurationAsync(string configFilePath);
     }
 }
