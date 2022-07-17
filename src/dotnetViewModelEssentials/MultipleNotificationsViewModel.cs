@@ -5,6 +5,7 @@ using MvvmCross.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,6 +17,8 @@ namespace dotnetViewModelEssentials
         #endregion
 
         #region Properties
+        private List<GeneralMessage> _newMessages = new List<GeneralMessage>();
+
         public ObservableCollection<INotificationViewModel> Messages { get; } = new ObservableCollection<INotificationViewModel>();
 
         public string MessageCountInfo => $"{MessageCount}";
@@ -47,11 +50,10 @@ namespace dotnetViewModelEssentials
         #region Constructors
         public MultipleNotificationsViewModel(IBackgroundHandler backgroundHandler) : base(backgroundHandler)
         {
-            _backgroundHandler = backgroundHandler;
-            //_backgroundHandler.RegisterMessage<NotifyMessage>(this, x => AddNotification(x));
+            _backgroundHandler.RegisterMessage<NotifyMessage>(this, x => AddNotification(x));
 
             ToggleShowNotificationsCommand = new MvxCommand(OnToggleShowNotifications);
-            //_ = UpdateMessagesLoopAsync();
+            _ = UpdateMessagesLoopAsync();
         }
         #endregion
 
@@ -69,31 +71,49 @@ namespace dotnetViewModelEssentials
 
 
         }
-        private void AddNotification(NotifyMessage x)
-        {
-            try
-            {
-                Messages.Add(new NotificationViewModel(_backgroundHandler, this, x.LogMessage));
-                RaisePropertyChanged(nameof(MessageCountInfo));
-            }
-            catch(Exception ex)
-            {
+        //private void AddNotification(NotifyMessage x)
+        //{
+        //    try
+        //    {
+        //        Messages.Add(new NotificationViewModel(_backgroundHandler, this, x.LogMessage));
+        //        RaisePropertyChanged(nameof(MessageCountInfo));
+        //    }
+        //    catch(Exception ex)
+        //    {
 
-            }
-            
+        //    }
+
+        //}
+
+        private void AddNotification(NotifyMessage message)
+        {
+            _newMessages.Add(message.LogMessage);
         }
 
-        //private async Task UpdateMessagesLoopAsync()
-        //{
-        //    while (true)
-        //    {
-        //        Messages.Clear();
-        //        foreach (GeneralMessage message in _backgroundHandler.)
-        //        {
+        private async Task UpdateMessagesLoopAsync()
+        {
+            while (true)
+            {
+                try
+                {
+                    foreach (GeneralMessage message in _newMessages)
+                    {
+                        Messages.Add(new NotificationViewModel(_backgroundHandler, this, message));
+                    }
+                    _newMessages.Clear();
+                    _ = RaisePropertyChanged(nameof(MessageCountInfo));
 
-        //        }
-        //    }
-        //}
+                    await Task.Delay(500);
+                }
+
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.GetType());
+                    Debug.WriteLine($"{ex.Message}:{ex.StackTrace}");
+                }
+
+            }
+        }
 
         public void UpdateShowMessages()
         {
