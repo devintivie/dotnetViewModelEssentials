@@ -1,6 +1,6 @@
 ﻿//using CommunityToolkit.Mvvm.ComponentModel;
 //using CommunityToolkit.Mvvm.Input;
-using dotnetStandardEssentials;
+using DotNetStandardEssentials;
 using MvvmCross.Commands;
 using MvvmCross.ViewModels;
 using System;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotNetStandardEssentials.Results;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace dotnetViewModelEssentials
         /// Navigate to Settings Page
         /// </summary>
         /// <returns></returns>
-        Task NavigateToSettingsScreen();
+        void NavigateToSettingsScreen();
 
         /// <summary>
         /// Asynchronously close current configuration
@@ -27,6 +28,6 @@ namespace dotnetViewModelEssentials
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        Task<bool> LoadConfigurationAsync(string configFilePath);
+        Task LoadFromConfigurationAsync(string configFilePath);
     }
 }

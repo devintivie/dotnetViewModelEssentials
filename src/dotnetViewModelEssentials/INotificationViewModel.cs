@@ -1,4 +1,4 @@
-﻿using dotnetStandardEssentials;
+﻿using DotNetStandardEssentials;
 using MvvmCross.Commands;
 using System;
 using System.Collections.Generic;

@@ -1,6 +1,6 @@
 ﻿//using CommunityToolkit.Mvvm.ComponentModel;
 //using CommunityToolkit.Mvvm.Input;
-using dotnetStandardEssentials;
+using DotNetStandardEssentials;
 using MvvmCross.Commands;
 using System;
 using System.Collections.Generic;
@@ -60,30 +60,16 @@ namespace dotnetViewModelEssentials
         #region Methods
         private void OnToggleShowNotifications()
         {
-            if (_backgroundHandler.NotificationCount > 0)
-            {
-                ShowMessages = !ShowMessages;
-            }
-            else
+            int notificationCount = _backgroundHandler.NotificationCount;
+
+            if (notificationCount == 0)
             {
                 ShowMessages = false;
+                return;
             }
 
-
+            ShowMessages = !ShowMessages;
         }
-        //private void AddNotification(NotifyMessage x)
-        //{
-        //    try
-        //    {
-        //        Messages.Add(new NotificationViewModel(_backgroundHandler, this, x.LogMessage));
-        //        RaisePropertyChanged(nameof(MessageCountInfo));
-        //    }
-        //    catch(Exception ex)
-        //    {
-
-        //    }
-
-        //}
 
         private void AddNotification(NotifyMessage message)
         {

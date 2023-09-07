@@ -1,4 +1,4 @@
-﻿using dotnetStandardEssentials;
+﻿using DotNetStandardEssentials;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,12 +20,12 @@ namespace dotnetViewModelEssentials
 
         public NavigatorViewModel(IBackgroundHandler backgroundHandler) : base(backgroundHandler)
         {
-            _backgroundHandler.RegisterMessage<ViewUnloadedMessage>(this, async x => await OnUnloaded());
+            _backgroundHandler.RegisterMessage<ViewUnloadedMessage>(this, async x => await OnUnloadedAsync());
         }
         #endregion
 
         #region Methods
-        public virtual Task OnUnloaded()
+        public virtual Task OnUnloadedAsync()
         {
             _backgroundHandler.UnregisterMessages(this);
             return Task.CompletedTask;
