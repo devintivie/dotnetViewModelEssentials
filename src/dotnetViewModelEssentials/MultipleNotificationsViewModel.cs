@@ -1,6 +1,7 @@
 ﻿//using CommunityToolkit.Mvvm.ComponentModel;
 //using CommunityToolkit.Mvvm.Input;
 using DotNetStandardEssentials;
+using DotNetStandardEssentials.BackgroundHandlers;
 using MvvmCross.Commands;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,14 @@ using System.Threading.Tasks;
 
 namespace dotnetViewModelEssentials
 {
-    public abstract class MultipleNotificationsViewModel : UpdateableViewModel, IErrorViewModel
+    public abstract class MultipleNotificationsViewModel 
+        : UpdateableViewModel<IMultipleNotificationBackgroundHandler>, IErrorViewModel
     {
         #region Fields
+        #endregion
+
+        #region Services
+
         #endregion
 
         #region Properties
@@ -48,7 +54,8 @@ namespace dotnetViewModelEssentials
         #endregion
 
         #region Constructors
-        public MultipleNotificationsViewModel(IBackgroundHandler backgroundHandler) : base(backgroundHandler)
+        public MultipleNotificationsViewModel(IMultipleNotificationBackgroundHandler backgroundHandler) 
+            : base(backgroundHandler)
         {
             _backgroundHandler.RegisterMessage<NotifyMessage>(this, x => AddNotification(x));
 

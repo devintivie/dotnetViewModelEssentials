@@ -1,4 +1,5 @@
 ﻿using DotNetStandardEssentials;
+using DotNetStandardEssentials.BackgroundHandlers;
 using MvvmCross.Commands;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace dotnetViewModelEssentials
 {
-    public class NotificationViewModel : NavigatorViewModel, INotificationViewModel
+    public class NotificationViewModel : NavigatorViewModel<IMultipleNotificationBackgroundHandler>, INotificationViewModel
     {
         #region Fields
         private IErrorViewModel _parent;
@@ -22,7 +23,9 @@ namespace dotnetViewModelEssentials
         #endregion
 
         #region Constructors
-        public NotificationViewModel(IBackgroundHandler backgroundHandler, IErrorViewModel parent, GeneralMessage logMessage)
+        public NotificationViewModel(IMultipleNotificationBackgroundHandler backgroundHandler
+            , IErrorViewModel parent
+            , GeneralMessage logMessage)
             : base(backgroundHandler)
         {
             _backgroundHandler = backgroundHandler;
@@ -39,7 +42,7 @@ namespace dotnetViewModelEssentials
         {
             var index = _parent.Messages.IndexOf(this);
             _parent.Messages.Remove(this);
-            _backgroundHandler.DismissMessage(index);
+            _backgroundHandler.DismissMessageAsync(index);
             _parent.UpdateShowMessages();
         }
         #endregion

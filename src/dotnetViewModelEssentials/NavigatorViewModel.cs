@@ -10,7 +10,7 @@ namespace dotnetViewModelEssentials
     /// ViewModel that updated via <see cref="UpdateViewMessage"/> and
     /// is able get cleaned via GarbageCollection after receiving <see cref="ViewUnloadedMessage"/>
     /// </summary>
-    public abstract class NavigatorViewModel : UpdateableViewModel, INavigatorViewModel
+    public abstract class NavigatorViewModel<T> : UpdateableViewModel<T>, INavigatorViewModel where T : IBackgroundHandler
     {
         #region Properties
 
@@ -18,7 +18,8 @@ namespace dotnetViewModelEssentials
 
         #region Constructors
 
-        public NavigatorViewModel(IBackgroundHandler backgroundHandler) : base(backgroundHandler)
+        public NavigatorViewModel(T backgroundHandler) 
+            : base(backgroundHandler)
         {
             _backgroundHandler.RegisterMessage<ViewUnloadedMessage>(this, async x => await OnUnloadedAsync());
         }

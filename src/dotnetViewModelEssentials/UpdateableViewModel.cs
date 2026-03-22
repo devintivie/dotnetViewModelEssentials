@@ -14,13 +14,14 @@ namespace dotnetViewModelEssentials
     /// ViewModel that updates via <see cref="UpdateViewMessage"/> but 
     /// does not Navigate, generally used for Application global menu
     /// </summary>
-    public abstract class UpdateableViewModel : MvxViewModel, IUpdateableViewModel
+    public abstract class UpdateableViewModel<T> : MvxViewModel, IUpdateableViewModel where T : IBackgroundHandler
     {
         #region Fields
-        protected IBackgroundHandler _backgroundHandler;
+        protected T _backgroundHandler;
+
         #endregion
 
-        public UpdateableViewModel(IBackgroundHandler backgroundHandler)
+        public UpdateableViewModel(T backgroundHandler)
         {
             _backgroundHandler = backgroundHandler;
 
